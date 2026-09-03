@@ -40,7 +40,7 @@ function HealthRing({ score }: { score: number }) {
   );
 }
 
-type Metric = { label: string; icon: "battery" | "hardDrive" | "cpu" | "activity" | "smartphone"; sub: string };
+type Metric = { label: string; icon: "battery" | "hardDrive" | "cpu" | "activity" | "smartphone" | "zap"; sub: string };
 
 const METRICS: Metric[] = [
   { label: "Battery", icon: "battery", sub: "Needs permission" },
