@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   description: "Personal Digital Command Center — manage your finances (CAL-EXPENSES), calendar, notes, automations and device insights in one premium dark dashboard. Private, local-first.",
   metadataBase: new URL("https://sufiyan-sabeel.github.io"),
   icons: {
-    icon: "/favicon.svg",
-    apple: "/icon-192.svg",
+    icon: "/CaL-EXManager/favicon.svg",
+    apple: "/CaL-EXManager/icon-192.svg",
   },
-  manifest: "/manifest.json",
+  manifest: "/CaL-EXManager/manifest.json",
   robots: { index: false, follow: false },
 };
 
