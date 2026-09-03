@@ -1,0 +1,290 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CAL-EXMANAGER — Personal Digital Command Center — Design System v1.0 dark-first */
+:root {
+  /* Surfaces & borders — design.md §5.1 */
+  --surface-base: #0A0B0E;
+  --surface-canvas: #101218;
+  --surface-1: #15171F;
+  --surface-2: #1C1F29;
+  --surface-3: #20232E;
+  --surface-inverse: #F4F5F7;
+  --border-subtle: #21242C;
+  --border-default: #2B2F3A;
+  --border-strong: #3D4250;
+
+  /* Text — §5.2 */
+  --text-primary: #F5F6F8;
+  --text-secondary: #A6ACBB;
+  --text-tertiary: #6B7180;
+  --text-disabled: #454A56;
+  --text-inverse: #12131A;
+
+  /* Brand accent Signal — §5.3 */
+  --accent-signal: #5B6EF5;
+  --accent-signal-strong: #4453D6;
+  --accent-signal-subtle: rgba(91,110,245,0.14);
+  --data-teal: #22B8B0;
+
+  /* Status — §5.4 */
+  --success: #22C55E;
+  --success-subtle: rgba(34,197,94,0.14);
+  --warning: #F0A83A;
+  --warning-subtle: rgba(240,168,58,0.14);
+  --error: #EF5164;
+  --error-subtle: rgba(239,81,100,0.14);
+  --info: #4C8DF6;
+  --info-subtle: rgba(76,141,246,0.14);
+
+  /* Chart categorical — §5.5 */
+  --chart-1: #5B6EF5;
+  --chart-2: #22B8B0;
+  --chart-3: #E8698C;
+  --chart-4: #D9B26D;
+  --chart-5: #5AA9E6;
+  --chart-6: #7FAE8C;
+
+  /* Heatmap — §5.6 */
+  --heat-0: #1A1D26;
+  --heat-1: rgba(91,110,245,0.18);
+  --heat-2: rgba(91,110,245,0.38);
+  --heat-3: rgba(91,110,245,0.62);
+  --heat-4: #5B6EF5;
+
+  /* Legacy compat — maps old token names to new dark values */
+  --color-background: var(--surface-canvas);
+  --color-surface: var(--surface-1);
+  --color-surface-elevated: var(--surface-2);
+  --color-surface-hover: var(--surface-2);
+  --color-border: var(--border-default);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-tertiary);
+  --color-background-dark: var(--surface-base);
+  --color-surface-dark: var(--surface-1);
+  --color-surface-elevated-dark: var(--surface-2);
+  --color-surface-hover-dark: var(--surface-2);
+  --color-border-dark: var(--border-default);
+  --color-text-primary-dark: var(--text-primary);
+  --color-text-secondary-dark: var(--text-secondary);
+  --color-text-muted-dark: var(--text-tertiary);
+  --color-brand-50: var(--accent-signal-subtle);
+  --color-brand-100: #3B4ED8;
+  --color-brand-200: #5B6EF5;
+  --color-brand-300: #7A86FF;
+  --color-brand-400: #5B6EF5;
+  --color-brand-500: #5B6EF5;
+  --color-brand-600: #4453D6;
+  --color-brand-700: #3B47B8;
+  --color-brand-800: #2E3690;
+  --color-brand-900: #1F2560;
+  --color-income: var(--success);
+  --color-income-bg: var(--success-subtle);
+  --color-expense: var(--error);
+  --color-expense-bg: var(--error-subtle);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-subtle);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-subtle);
+  --color-error: var(--error);
+  --color-error-bg: var(--error-subtle);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-subtle);
+  --color-event: var(--chart-3);
+  --color-event-bg: rgba(232,105,140,0.14);
+  --color-gift: #C084FC;
+  --color-gift-bg: rgba(192,132,252,0.14);
+  --color-goal: #22B8B0;
+  --color-goal-bg: rgba(34,184,176,0.14);
+  --color-ai: var(--accent-signal);
+  --color-ai-bg: var(--accent-signal-subtle);
+  --surface-canvas: var(--surface-canvas);
+  --surface-elevated-1: var(--surface-1);
+  --surface-elevated-2: var(--surface-2);
+  --surface-overlay: rgba(10,11,14,0.7);
+  --border-subtle: var(--border-subtle);
+  --border-strong: var(--border-strong);
+  --accent-primary: var(--accent-signal);
+  --accent-primary-subtle: var(--accent-signal-subtle);
+  --semantic-income: var(--success);
+  --semantic-expense: var(--error);
+  --semantic-warning: var(--warning);
+  --semantic-danger: var(--error);
+  --semantic-neutral-info: var(--info);
+  --indicator-income: var(--success);
+  --indicator-expense: var(--error);
+  --indicator-bill: var(--warning);
+  --indicator-event: var(--chart-3);
+  --indicator-gift: #C084FC;
+  --indicator-goal: var(--data-teal);
+  --indicator-reminder: var(--info);
+
+  /* Typography — §6 Plus Jakarta Sans */
+  --font-family-base: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-size-display: 2.75rem;
+  --font-size-h1: 1.625rem;
+  --font-size-h2: 1.25rem;
+  --font-size-h3: 1rem;
+  --font-size-h4: 0.9375rem;
+  --font-size-body: 0.9375rem;
+  --font-size-body-sm: 0.8125rem;
+  --font-size-caption: 0.75rem;
+  --font-size-financial-lg: 2.125rem;
+  --font-size-financial-md: 1.375rem;
+  --font-size-financial-sm: 0.9375rem;
+  --font-size-metric-hero: 2.75rem;
+  --font-size-metric-lg: 2rem;
+  --font-inter: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-lexend: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Spacing 4px — §7 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius — §12 */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 999px;
+
+  /* Elevation — §12: no shadows on resting cards, only overlays */
+  --elevation-0: none;
+  --elevation-1: none;
+  --elevation-2: 0 8px 24px rgba(0,0,0,0.32), 0 2px 8px rgba(0,0,0,0.24);
+  --elevation-3: 0 16px 40px rgba(0,0,0,0.40), 0 4px 16px rgba(0,0,0,0.30);
+  --elevation-4: 0 24px 48px rgba(0,0,0,0.50), 0 8px 24px rgba(0,0,0,0.35);
+  --border-width-hairline: 1px;
+
+  /* Motion — §34 */
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 320ms;
+  --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-decelerate: cubic-bezier(0, 0, 0, 1);
+  --motion-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
+
+  /* Breakpoints */
+  --breakpoint-mobile: 320px;
+  --breakpoint-mobile-lg: 480px;
+  --breakpoint-tablet: 640px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-desktop-lg: 1440px;
+
+  --icon-size-xs: 14px;
+  --icon-size-sm: 18px;
+  --icon-size-md: 22px;
+  --icon-size-lg: 28px;
+  --icon-size-xl: 36px;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--surface-base);
+  color: var(--text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+}
+
+h1 { font-size: var(--font-size-h1); line-height: 1.2; letter-spacing: -0.01em; font-weight: 700; }
+h2 { font-size: var(--font-size-h2); line-height: 1.25; font-weight: 700; }
+h3 { font-size: var(--font-size-h3); line-height: 1.3; font-weight: 600; }
+h4 { font-size: var(--font-size-h4); line-height: 1.35; font-weight: 600; }
+
+/* Premium numeric hierarchy */
+.display-number, .metric-hero {
+  font-family: var(--font-family-base);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: var(--font-size-metric-hero);
+  line-height: 1.15;
+}
+.metric-lg {
+  font-family: var(--font-family-base);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: var(--font-size-metric-lg);
+}
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+*:focus-visible {
+  outline: 2px solid var(--accent-signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-canvas); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 37%, var(--surface-2) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.glass {
+  background: rgba(21,23,31,0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Premium hairline card — no shadow, 1px border + surface shift */
+.card-premium {
+  background: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+.card-hero {
+  background: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.card-hero::before {
+  content: "";
+  position: absolute;
+  top: -40%; right: -20%;
+  width: 60%; height: 80%;
+  background: radial-gradient(ellipse at center, rgba(91,110,245,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
