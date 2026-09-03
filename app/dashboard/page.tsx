@@ -70,31 +70,32 @@ export default function Dashboard() {
   const [refresh, setRefresh] = useState(0);
   useEffect(() => { if (!loading && !user) router.replace("/auth"); const prof=ProfileService.get(); if(!loading&&user&&prof&&!prof.onboardingCompleted) router.replace("/onboarding"); }, [user,loading,router]);
   const data = useMemo(() => {
-    if (typeof window==="undefined") return null;
-    const profile=ProfileService.get(); if(!profile) return null;
-    const today=todayISODate();
-    const expenses=ExpenseService.getAll();
-    const incomes=IncomeService.getAll();
-    const budgets=BudgetService.getAll();
-    const events=EventService.getAll();
-    const automations=AutomationService.getAll();
-    const { start, end }=monthRangeFor(today);
-    const monthlyIncome=calcMonthlyIncome(incomes,start,end);
-    const monthlyExpenses=calcMonthlyExpenses(expenses,start,end);
-    const balance=calcCurrentBalance(profile.startingBalance,incomes,expenses,today);
-    const savings=calcMonthlySavings(monthlyIncome,monthlyExpenses);
-    const rate=calcSavingsRate(savings,monthlyIncome);
-    const todayIncome=incomes.filter(i=>i.date===today).reduce((s,i)=>s+i.amount,0);
-    const todayExpense=expenses.filter(e=>e.date===today).reduce((s,e)=>s+e.amount,0);
-    const last30=Array.from({length:30},(_,i)=>{ const d=new Date(today+"T00:00:00"); d.setDate(d.getDate()-(29-i)); const iso=d.toISOString().slice(0,10); return {date:iso, spent:dailySpend(iso,expenses)};});
-    const upcoming=events.filter(e=>e.startDate>=today).slice(0,3);
-    const recent=expenses.slice(0,5);
-    // command score: simple composite 40% savingsRate 30% budget health 30% activity
-    const budgetHealth = budgets.length? Math.max(0,100 - budgets.filter(b=>{const spent=expenses.filter(e=>e.categoryId===b.categoryId).reduce((s,e)=>s+e.amount,0); return spent>b.amount}).length*25): 80;
-    const activityScore = Math.min(100, expenses.length*4 + events.length*3 + automations.filter(a=>a.enabled).length*10);
-    const savingsScore = rate===null? 60 : Math.max(0, Math.min(100, 60 + (rate/2)));
-    const commandScore = Math.round(0.4*savingsScore + 0.3*budgetHealth + 0.3*activityScore);
-    return { profile, balance, monthlyIncome, monthlyExpenses, savings, rate, todayIncome, todayExpense, last30, upcoming, recent, expenses, budgets, commandScore, automations };
+    try {
+      if (typeof window==="undefined") return null;
+      const profile=ProfileService.get(); if(!profile) return null;
+      const today=todayISODate();
+      const expenses=ExpenseService.getAll() || [];
+      const incomes=IncomeService.getAll() || [];
+      const budgets=BudgetService.getAll() || [];
+      const events=EventService.getAll() || [];
+      const automations=AutomationService.getAll() || [];
+      const { start, end }=monthRangeFor(today);
+      const monthlyIncome=calcMonthlyIncome(incomes,start,end);
+      const monthlyExpenses=calcMonthlyExpenses(expenses,start,end);
+      const balance=calcCurrentBalance(profile.startingBalance||0,incomes,expenses,today);
+      const savings=calcMonthlySavings(monthlyIncome,monthlyExpenses);
+      const rate=calcSavingsRate(savings,monthlyIncome);
+      const todayIncome=incomes.filter(i=>i.date===today).reduce((s,i)=>s+i.amount,0);
+      const todayExpense=expenses.filter(e=>e.date===today).reduce((s,e)=>s+e.amount,0);
+      const last30=Array.from({length:30},(_,i)=>{ const d=new Date(today+"T00:00:00"); d.setDate(d.getDate()-(29-i)); const iso=d.toISOString().slice(0,10); return {date:iso, spent:dailySpend(iso,expenses)};});
+      const upcoming=events.filter(e=>e.startDate>=today).slice(0,3);
+      const recent=expenses.slice(0,5);
+      const budgetHealth = budgets.length? Math.max(0,100 - budgets.filter(b=>{try{const spent=expenses.filter(e=>e.categoryId===b.categoryId).reduce((s,e)=>s+e.amount,0); return spent>b.amount}catch{return false}}).length*25): 80;
+      const activityScore = Math.min(100, expenses.length*4 + events.length*3 + automations.filter(a=>a.enabled).length*10);
+      const savingsScore = rate===null? 60 : Math.max(0, Math.min(100, 60 + (rate/2)));
+      const commandScore = Math.round(0.4*savingsScore + 0.3*budgetHealth + 0.3*activityScore);
+      return { profile, balance, monthlyIncome, monthlyExpenses, savings, rate, todayIncome, todayExpense, last30, upcoming, recent, expenses, budgets, commandScore, automations };
+    } catch(e){ console.error("[dashboard data]",e); return null; }
   }, [refresh]);
   useEffect(()=>{ const h=()=>setRefresh(v=>v+1); window.addEventListener("calexpenses:refresh",h as EventListener); window.addEventListener("storage",h); return ()=>{window.removeEventListener("calexpenses:refresh",h as EventListener); window.removeEventListener("storage",h);};},[]);
   if(loading) return <div className="p-8"><div className="skeleton h-24 w-full rounded-[14px]" /></div>;
@@ -109,7 +110,7 @@ export default function Dashboard() {
       {/* Greeting */}
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-[26px] font-bold tracking-tight leading-none">{greeting}, <span className="text-[var(--text-secondary)]">{data.profile.displayName.split(" ")[0]}</span></h1>
+          <h1 className="text-[26px] font-bold tracking-tight leading-none">{greeting}, <span className="text-[var(--text-secondary)]">{(data.profile.displayName||"User").split(" ")[0]}</span></h1>
           <p className="text-sm text-[var(--text-tertiary)] mt-1">Your command center — {new Date().toLocaleDateString(data.profile.locale,{weekday:"long", month:"long", day:"numeric"})}</p>
         </div>
         <div className="hidden lg:flex items-center gap-2">
